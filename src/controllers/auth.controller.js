@@ -28,4 +28,11 @@ const login = async (req, res) => {
     }
 }
 
-export default { register, login};
+const verify = (req, res) => {
+    res.status(200).json({
+        valid: true,
+        user: req.user
+    });
+}
+
+export default { register, login, verify};

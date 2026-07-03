@@ -1,5 +1,6 @@
 import UserModel from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import generateToken from "../utils/jwt.js";
 
 const register = async (fName, lName, email, password) => {
     const userExists = await UserModel.findUserByEmail(email);
@@ -10,15 +11,19 @@ const register = async (fName, lName, email, password) => {
     const passwordHash = await bcrypt.hash(password,10);
 
     const user = await UserModel.createUser(fName, lName, email, passwordHash);
+
+    const token = generateToken(user);
+
     return {
         user: {
             id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
+            fName: user.first_name,
+            lName: user.last_name,
             email: user.email,
-            created_at: user.created_at
-        }
-    }
+            createdAt: user.created_at
+        },
+        token
+    };
 }
 
 const login = async (email, password) => {
@@ -32,15 +37,18 @@ const login = async (email, password) => {
         throw new Error("Invalid credentials");
     }
 
+    const token = generateToken(user);
+
     return {
         user: {
             id: user.id,
-            first_name: user.first_name,
-            last_name: user.last_name,
+            fName: user.first_name,
+            lName: user.last_name,
             email: user.email,
-            created_at: user.created_at
-        }
-    }
+            createdAt: user.created_at
+        },
+        token
+    };
 
 }
 
