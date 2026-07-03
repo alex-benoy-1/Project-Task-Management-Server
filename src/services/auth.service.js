@@ -1,4 +1,5 @@
 import UserModel from "../models/user.model.js";
+import bcrypt from "bcrypt";
 
 const register = async (fName, lName, email, password) => {
     const userExists = await UserModel.findUserByEmail(email);
@@ -6,7 +7,9 @@ const register = async (fName, lName, email, password) => {
         throw new Error("An Account with this email already exists");
     }
 
-    const user = await UserModel.createUser(fName, lName, email, password);
+    const passwordHash = await bcrypt.hash(password,10);
+
+    const user = await UserModel.createUser(fName, lName, email, passwordHash);
     return {
         user: {
             id: user.id,
@@ -23,18 +26,20 @@ const login = async (email, password) => {
     if(!user) {
         throw new Error("Invalid credentials");
     }
-    if(password === user.password_hash) {
-        return {
-            user: {
-                id: user.id,
-                first_name: user.first_name,
-                last_name: user.last_name,
-                email: user.email,
-                created_at: user.created_at
-            }
-        }
-    } else {
+
+    const passwordMatch = await bcrypt.compare(password, user.password_hash);
+    if(!passwordMatch) {
         throw new Error("Invalid credentials");
+    }
+
+    return {
+        user: {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            created_at: user.created_at
+        }
     }
 
 }
