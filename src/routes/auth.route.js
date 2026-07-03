@@ -3,6 +3,7 @@ import express from "express";
 
 const authRouter = express.Router();
 
-authRouter.post("/email", AuthController.getUser);
+authRouter.post("/register", AuthController.register);
+authRouter.post("/login", AuthController.login);
 
 export default authRouter;

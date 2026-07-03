@@ -9,6 +9,6 @@ app.get("/", (req, res) => {
     res.status(200).json({message: "App succesful"});
 });
 
-app.use("/getuser", authRoutes);
+app.use("/auth", authRoutes);
 
 export default app;
