@@ -40,25 +40,25 @@ const createOrganization = async (name, slug, userId) => {
     }
 }
 
+const getOrganizationsByUser = async (userId) => {
+    const query = `
+        SELECT 
+            o.id,
+            o.name,
+            o.slug,
+            o.created_at,
+            o.updated_at,
+            om.role 
+        FROM organizations o
+        JOIN organization_members om
+            ON o.id = om.organization_id
+        WHERE om.user_id = $1
+        ORDER BY o.name`;
 
-export default { createOrganization };
+    const result = await pgdb.query(query,
+        [userId]
+    );
+    return result.rows;
+}
 
-
-    // const query = `INSERT INTO organizations (name, slug)
-    //     VALUES ($1, $2)
-    //     RETURNING *`;
-    // const result = await pgdb.query(query,
-    //     [name, slug]
-    // );
-    // const orgId = result.rows[0].id;
-    // const memberQuery = `INSERT INTO organization_members (organization_id, user_id, role)
-    //     VALUES ($1, $2, $3)
-    //     RETURNING *`;
-    // const memberQueryResult = await pgdb.query(memberQuery,
-    //     [orgId, userId, "admin"]
-    // );
-
-    // return {
-    //     organization: result.rows[0],
-    //     membership: memberQueryResult.rows[0]
-    // };
+export default { createOrganization, getOrganizationsByUser };

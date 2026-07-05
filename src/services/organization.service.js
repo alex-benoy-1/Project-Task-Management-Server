@@ -16,4 +16,20 @@ const createOrganization = async (name, userId) => {
     };
 }
 
-export default { createOrganization };
+const getOrganizationByUser = async (userId) => {
+    const organizations = await OrganizationModel.getOrganizationsByUser(userId);
+
+    if(organizations.length === 0) {
+        return {
+            organizations: [],
+            count: 0
+        };
+    } else {
+        return {
+            organizations,
+            count: organizations.length
+        };
+    }
+}
+
+export default { createOrganization, getOrganizationByUser };

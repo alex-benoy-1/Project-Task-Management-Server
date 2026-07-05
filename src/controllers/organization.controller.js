@@ -14,4 +14,16 @@ const createOrganization = async (req, res) => {
     }
 }
 
-export default { createOrganization };
+const getOrganizationByUser = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        const result = await OrganizationService.getOrganizationByUser(userId);
+
+        res.status(200).json(result);
+    } catch(err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default { createOrganization, getOrganizationByUser };
