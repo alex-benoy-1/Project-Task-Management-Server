@@ -26,4 +26,15 @@ const getOrganizationByUser = async (req, res) => {
     }
 }
 
-export default { createOrganization, getOrganizationByUser };
+const getOrgByOrgId = async (req, res) => {
+    try {
+        const orgId = req.membership.organization_id;
+
+        const result = await OrganizationService.getOrgByOrgId(orgId);
+        res.status(200).json(result);
+    } catch(err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default { createOrganization, getOrganizationByUser, getOrgByOrgId };

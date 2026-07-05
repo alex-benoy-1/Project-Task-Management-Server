@@ -61,4 +61,26 @@ const getOrganizationsByUser = async (userId) => {
     return result.rows;
 }
 
-export default { createOrganization, getOrganizationsByUser };
+const getOrgByOrgId = async (orgId) => {
+    const query = `SELECT * FROM organizations WHERE id = $1`;
+
+    const result = await pgdb.query(query,
+        [orgId]
+    );
+    return result.rows[0];
+}
+
+const membershipStatus = async (orgId, userId) => {
+    const query = `SELECT * FROM organization_members 
+        WHERE 
+            organization_id = $1
+        AND
+            user_id = $2`;
+
+    const result = await pgdb.query(query,
+        [orgId, userId]
+    );
+    return result.rows[0];
+}
+
+export default { createOrganization, getOrganizationsByUser,getOrgByOrgId, membershipStatus };

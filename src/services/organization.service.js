@@ -32,4 +32,14 @@ const getOrganizationByUser = async (userId) => {
     }
 }
 
-export default { createOrganization, getOrganizationByUser };
+const getOrgByOrgId = async (orgId) => {
+    const organization = await OrganizationModel.getOrgByOrgId(orgId);
+
+    if(!organization) {
+        throw new Error("No organization found");
+    }
+
+    return organization;
+}
+
+export default { createOrganization, getOrganizationByUser, getOrgByOrgId };
