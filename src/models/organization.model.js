@@ -1,6 +1,6 @@
 import pgdb from "../configs/db.config.js";
 
-const createOrganization = async (name, slug, userId) => {
+const createOrganization = async (name, slug, userId, type) => {
 
     const client = await pgdb.connect();
 
@@ -8,11 +8,11 @@ const createOrganization = async (name, slug, userId) => {
         await client.query("BEGIN");
 
         const orgQuery = 
-            `INSERT INTO organizations (name, slug)
-            VALUES ($1, $2)
+            `INSERT INTO organizations (name, slug, type)
+            VALUES ($1, $2, $3)
             RETURNING *`;
         const orgResult = await client.query(orgQuery,
-            [name, slug]
+            [name, slug, type]
         );
 
         const organization = orgResult.rows[0];

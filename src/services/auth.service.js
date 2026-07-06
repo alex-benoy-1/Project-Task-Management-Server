@@ -1,6 +1,8 @@
 import UserModel from "../models/user.model.js";
+import OrganizationModel from "../models/organization.model.js";
 import bcrypt from "bcrypt";
 import generateToken from "../utils/jwt.js";
+import crypto from "crypto";
 
 const register = async (fName, lName, email, password) => {
     const userExists = await UserModel.findUserByEmail(email);
@@ -14,6 +16,13 @@ const register = async (fName, lName, email, password) => {
 
     const token = generateToken(user);
 
+    const workspaceName = `${user.first_name}'s Workspace`;
+    const slug = crypto.randomUUID();
+
+    const {organization, membership} = await OrganizationModel.createOrganization(
+        workspaceName, slug, user.id, "personal"
+    );
+
     return {
         user: {
             id: user.id,
@@ -22,6 +31,13 @@ const register = async (fName, lName, email, password) => {
             email: user.email,
             createdAt: user.created_at
         },
+        workspace: {
+            id: organization.id,
+            name: organization.name,
+            slug: organization.slug,
+            type: organization.type,
+            createdBy: membership.user_id
+        }, 
         token
     };
 }
