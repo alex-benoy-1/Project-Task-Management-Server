@@ -6,9 +6,7 @@ import pgdb from "../configs/db.config.js";
 
 const createOrganization = async (name, userId) => {
 
-    const {organization, membership} = await OrganizationModel.createOrganization(name, slug, userId, "team");
-
-    const client = pgdb.connect();
+    const client = await pgdb.connect();
     try {
         await client.query("BEGIN");
 
@@ -26,7 +24,8 @@ const createOrganization = async (name, userId) => {
                 name: organization.name,
                 slug: organization.slug,
                 type: organization.type,
-                createdBy: member.user_id
+                createdBy: member.user_id,
+                role: member.role
             }
         }
 
