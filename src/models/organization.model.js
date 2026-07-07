@@ -1,6 +1,6 @@
 import pgdb from "../configs/db.config.js";
 
-const createOrganization = async (client, name, slug, userId, type) => {
+const createOrganization = async (name, slug, userId, type, client = pgdb) => {
 
     try {
 
@@ -52,17 +52,19 @@ const getOrgByOrgId = async (orgId) => {
     return result.rows[0];
 }
 
-const membershipStatus = async (orgId, userId) => {
-    const query = `SELECT * FROM organization_members 
-        WHERE 
-            organization_id = $1
-        AND
-            user_id = $2`;
-
+const deleleOrganization = async (orgId) => {
+    const query = `DELETE FROM organizations
+        WHERE id = $1
+        RETURNING *;`
     const result = await pgdb.query(query,
-        [orgId, userId]
+        [orgId]
     );
     return result.rows[0];
 }
 
-export default { createOrganization, getOrganizationsByUser,getOrgByOrgId, membershipStatus };
+export default { 
+    createOrganization, 
+    getOrganizationsByUser,
+    getOrgByOrgId,
+    deleleOrganization 
+};

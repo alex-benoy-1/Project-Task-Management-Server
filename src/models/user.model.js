@@ -1,6 +1,6 @@
 import pgdb from "../configs/db.config.js";
 
-const createUser = async (client, fName, lName, email, password) => {
+const createUser = async (fName, lName, email, password, client = pgdb) => {
     const query = `INSERT INTO users (first_name, last_name, email, password_hash)
         VALUES($1, $2, $3, $4) 
         RETURNING *`;

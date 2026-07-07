@@ -18,13 +18,13 @@ const register = async (fName, lName, email, password) => {
     try {
         await client.query("BEGIN");
         
-        const user = await UserModel.createUser(client, fName, lName, email, passwordHash);
+        const user = await UserModel.createUser(fName, lName, email, passwordHash, client);
         const token = generateToken(user);
         const workspaceName = `${user.first_name}'s Workspace`;
         const slug = crypto.randomUUID();
         
         const organization = await OrganizationModel.createOrganization(
-            client, workspaceName, slug, user.id, "personal");
+            workspaceName, slug, user.id, "personal", client);
 
         const member = await OrgMemberModel.createOrgMember(
             client, organization.id, user.id, "admin"
@@ -57,9 +57,6 @@ const register = async (fName, lName, email, password) => {
         client.release();
     }
 
-    
-
-   
 }
 
 const login = async (email, password) => {

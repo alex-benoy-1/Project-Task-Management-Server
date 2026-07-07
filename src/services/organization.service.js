@@ -12,9 +12,9 @@ const createOrganization = async (name, userId) => {
 
         const slug = generateSlug(name);
         const organization = await OrganizationModel.createOrganization(
-            client, name, slug, userId, "team");
+            name, slug, userId, "team", client);
         const member = await OrgMemberModel.createOrgMember(
-            client, organization.id, userId, "admin");
+            organization.id, userId, "admin", client);
 
         await client.query("COMMIT");
 
@@ -63,4 +63,14 @@ const getOrgByOrgId = async (orgId) => {
     return organization;
 }
 
-export default { createOrganization, getOrganizationByUser, getOrgByOrgId };
+const deleteOrganization = async (orgId) => {
+    const organization = await OrganizationModel.deleleOrganization(orgId);
+
+    if(!organization) {
+        throw new Error("No organization found");
+    }
+
+    return organization;
+}
+
+export default { createOrganization, getOrganizationByUser, getOrgByOrgId, deleteOrganization };

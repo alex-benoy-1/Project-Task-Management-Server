@@ -1,6 +1,6 @@
 import pgdb from "../configs/db.config.js"
 
-const createOrgMember = async (client, organizationId, userId, role) => {
+const createOrgMember = async (organizationId, userId, role, client = pgdb) => {
     const query = 
         `INSERT INTO organization_members (organization_id, user_id, role)
         VALUES ($1, $2, $3)
@@ -12,4 +12,18 @@ const createOrgMember = async (client, organizationId, userId, role) => {
     return result.rows[0];
 }
 
-export default {createOrgMember};
+
+const membershipStatus = async (orgId, userId) => {
+    const query = `SELECT * FROM organization_members 
+        WHERE 
+            organization_id = $1
+        AND
+            user_id = $2`;
+
+    const result = await pgdb.query(query,
+        [orgId, userId]
+    );
+    return result.rows[0];
+}
+
+export default {createOrgMember, membershipStatus};
