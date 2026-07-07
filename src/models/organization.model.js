@@ -1,43 +1,25 @@
 import pgdb from "../configs/db.config.js";
 
-const createOrganization = async (name, slug, userId, type) => {
-
-    const client = await pgdb.connect();
+const createOrganization = async (client, name, slug, userId, type) => {
 
     try {
-        await client.query("BEGIN");
 
-        const orgQuery = 
+        const query = 
             `INSERT INTO organizations (name, slug, type)
             VALUES ($1, $2, $3)
             RETURNING *`;
-        const orgResult = await client.query(orgQuery,
+        const result = await client.query(query,
             [name, slug, type]
         );
 
-        const organization = orgResult.rows[0];
+        const organization = result.rows[0];
 
-        const memberQuery = 
-            `INSERT INTO organization_members (organization_id, user_id, role)
-            VALUES ($1, $2, $3)
-            RETURNING *`;
-        const memberResult = await client.query(memberQuery,
-            [organization.id, userId, "admin"]
-        );
-
-        await client.query("COMMIT");
-
-        return {
-            organization,
-            membership: memberResult.rows[0]
-        };
+        return organization;
 
     } catch (err) {
         await client.query("ROLLBACK");
         throw err;
-    } finally {
-        client.release();
-    }
+    } 
 }
 
 const getOrganizationsByUser = async (userId) => {

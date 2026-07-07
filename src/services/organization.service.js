@@ -1,20 +1,41 @@
 import OrganizationModel from "../models/organization.model.js";
+import OrgMemberModel from "../models/orgMember.model.js";
 import generateSlug from "../utils/slug.js";
+import pgdb from "../configs/db.config.js";
+
 
 const createOrganization = async (name, userId) => {
-    const slug = generateSlug(name);
 
     const {organization, membership} = await OrganizationModel.createOrganization(name, slug, userId, "team");
 
-    return {
-        organization: {
-            id: organization.id,
-            name: organization.name,
-            slug: organization.slug,
-            type: organization.type,
-            createdBy: membership.user_id
+    const client = pgdb.connect();
+    try {
+        await client.query("BEGIN");
+
+        const slug = generateSlug(name);
+        const organization = await OrganizationModel.createOrganization(
+            client, name, slug, userId, "team");
+        const member = await OrgMemberModel.createOrgMember(
+            client, organization.id, userId, "admin");
+
+        await client.query("COMMIT");
+
+        return {
+            organization: {
+                id: organization.id,
+                name: organization.name,
+                slug: organization.slug,
+                type: organization.type,
+                createdBy: member.user_id
+            }
         }
-    };
+
+    } catch(err) {
+        await client.query("ROLLBACK");
+        throw err;
+    } finally {
+        client.release();
+    }
 }
 
 const getOrganizationByUser = async (userId) => {
