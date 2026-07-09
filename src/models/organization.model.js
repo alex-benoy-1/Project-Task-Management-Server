@@ -62,6 +62,29 @@ const deleleOrganization = async (orgId) => {
     return result.rows[0];
 }
 
+// // returns team organizations where user is the only admin
+// const soleAdminOrgByUserId = async (userId) => {
+//     const query = `
+//     SELECT o.id, o.name
+//     FROM organizations o
+//     JOIN organization_members om
+//     WHERE 
+//         om.user_id = $1
+//         AND om.role = 'admin'
+//         AND o.type = 'team'
+//         AND NOT EXISTS (
+//             SELECT 1
+//             FROM organization_members om2
+//             WHERE om.organization_id = o.id
+//                 AND om2.role = 'admin'
+//                 AND om2.user_id <> $1
+//         )    
+//     `;
+
+//     const result = await pgdb.query(query, [userId]);
+//     return result.rows;
+// }
+
 export default { 
     createOrganization, 
     getOrganizationsByUser,

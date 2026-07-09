@@ -1,11 +1,11 @@
-const requireAdmin = async (req, res, next) => {
+const requireRole = (...roles) => async (req, res, next) => {
     try {
         if(!req.membership) {
             return res.status(403).json({message: "Not a member of the organization"});
         }
 
-        if(req.membership.role !== "admin") {
-            return res.status(403).json({message: "Admin status required"});
+        if(!roles.includes(req.membership.role)) {
+            return res.status(403).json({message: "No authorization"});
         } 
         next();
     } catch(err) {
@@ -13,4 +13,4 @@ const requireAdmin = async (req, res, next) => {
     }
 }
 
-export default requireAdmin;
+export default requireRole;

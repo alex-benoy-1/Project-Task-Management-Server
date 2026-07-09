@@ -26,4 +26,16 @@ const membershipStatus = async (orgId, userId) => {
     return result.rows[0];
 }
 
-export default {createOrgMember, membershipStatus};
+const removeMemberById = async (orgId, memberId) => {
+    const query = `
+    DELETE FROM organization_members
+    WHERE organization_id = $1
+        AND user_id = $2
+    RETURNING *`;
+    const result = await pgdb.query(query,
+        [orgId, memberId]
+    );
+    return result.rows[0];
+}
+
+export default {createOrgMember, membershipStatus, removeMemberById};

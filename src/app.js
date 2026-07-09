@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/auth.route.js";
 import orgRouter from "./routes/organization.routes.js";
+import orgMemberRouter from "./routes/orgMember.route.js";
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.get("/", (req, res) => {
 
 app.use("/auth", authRoutes);
 app.use("/org", orgRouter);
+app.use("/member", orgMemberRouter);
 
 export default app;
