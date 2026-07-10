@@ -27,7 +27,7 @@ const register = async (fName, lName, email, password) => {
             workspaceName, slug, user.id, "personal", client);
 
         const member = await OrgMemberModel.createOrgMember(
-            client, organization.id, user.id, "admin"
+            organization.id, user.id, "admin", client
         );
 
         await client.query("COMMIT");

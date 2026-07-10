@@ -5,11 +5,11 @@ const createOrganization = async (name, slug, userId, type, client = pgdb) => {
     try {
 
         const query = 
-            `INSERT INTO organizations (name, slug, type)
-            VALUES ($1, $2, $3)
+            `INSERT INTO organizations (name, slug, type, owner_id)
+            VALUES ($1, $2, $3, $4)
             RETURNING *`;
         const result = await client.query(query,
-            [name, slug, type]
+            [name, slug, type, userId]
         );
 
         const organization = result.rows[0];
