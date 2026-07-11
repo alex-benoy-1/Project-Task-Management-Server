@@ -26,6 +26,18 @@ const membershipStatus = async (orgId, userId) => {
     return result.rows[0];
 }
 
+const changeRole = async (orgId, userId, role) => {
+    const query = `UPDATE organization_members
+        SET role = $1
+        WHERE user_id = $2
+            AND organization_id = $3
+        RETURNING *`;
+    const result = await pgdb.query(query,
+        [role, userId, orgId]
+    );
+    return result.rows[0];
+}
+
 const removeMemberById = async (orgId, memberId) => {
     const query = `
     DELETE FROM organization_members

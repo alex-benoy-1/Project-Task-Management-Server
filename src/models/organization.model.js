@@ -62,6 +62,17 @@ const deleleOrganization = async (orgId) => {
     return result.rows[0];
 }
 
+const changeOwner = async (ownerId, memberId) => {
+    const query = `UPDATE organizations
+        SET owner_id = $1
+        WHERE owner_id = $2
+        RETURNING *`;
+    const result = await pgdb.query(query,
+        [memberId, ownerId]
+    );
+    return result.rows[0];
+}
+
 // // returns team organizations where user is the only admin
 // const soleAdminOrgByUserId = async (userId) => {
 //     const query = `
