@@ -39,7 +39,7 @@ const getOrgByOrgId = async (req, res) => {
 
 const deleteOrganization = async (req, res) => {
     try {
-        const orgId = req.membership.organization_id;
+        const orgId = req.owner.id;
         const result = await OrganizationService.deleteOrganization(orgId);
         res.status(200).json(result);
     } catch(err) {

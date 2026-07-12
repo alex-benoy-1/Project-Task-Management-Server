@@ -22,6 +22,17 @@ const createOrganization = async (name, slug, userId, type, client = pgdb) => {
     } 
 }
 
+const getOrgByOwnerId = async (orgId, userId) => {
+    const query = `SELECT * FROM organizations 
+        WHERE owner_id = $1
+        AND id = $2`;
+
+    const result = await pgdb.query(query,
+        [userId, orgId]
+    );
+    return result.rows[0];
+}
+
 const getOrganizationsByUser = async (userId) => {
     const query = `
         SELECT 
@@ -100,5 +111,6 @@ export default {
     createOrganization, 
     getOrganizationsByUser,
     getOrgByOrgId,
-    deleleOrganization 
+    deleleOrganization,
+    getOrgByOwnerId 
 };
