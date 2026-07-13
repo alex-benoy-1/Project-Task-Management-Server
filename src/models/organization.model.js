@@ -33,6 +33,18 @@ const getOrgByOwnerId = async (orgId, userId) => {
     return result.rows[0];
 }
 
+const updateOwner = async (orgId, memberId) => {
+    const query = `UPDATE organizations
+        SET owner_id = $1
+        WHERE id = $2
+        RETURNING *`;
+
+    const result = await pgdb.query(query,
+        [memberId, orgId]
+    );
+    return result.rows[0];
+}
+
 const getOrganizationsByUser = async (userId) => {
     const query = `
         SELECT 
@@ -112,5 +124,6 @@ export default {
     getOrganizationsByUser,
     getOrgByOrgId,
     deleleOrganization,
-    getOrgByOwnerId 
+    getOrgByOwnerId ,
+    updateOwner
 };

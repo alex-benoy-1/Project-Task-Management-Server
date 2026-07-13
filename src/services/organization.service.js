@@ -73,4 +73,19 @@ const deleteOrganization = async (orgId) => {
     return organization;
 }
 
-export default { createOrganization, getOrganizationByUser, getOrgByOrgId, deleteOrganization };
+const updateOwner = async (orgId, memberId) => {
+    const organization = await OrganizationModel.updateOwner(orgId, memberId);
+    if(!organization) {
+        throw new Error("Ownership not changed");
+    }
+
+    return organization;
+}
+
+export default { 
+    createOrganization, 
+    getOrganizationByUser, 
+    getOrgByOrgId, 
+    deleteOrganization,
+    updateOwner
+};
