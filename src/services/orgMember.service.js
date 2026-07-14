@@ -10,4 +10,12 @@ const removeMember = async (orgId, memberId) => {
     return member;
 }
 
-export default {removeMember};
+const getMembers = async (orgId) => {
+    const members = await OrgMemberModel.getAllMembers(orgId);
+
+    if(members.length == 0) {
+        throw new Error("No members found");
+    }
+    return members;
+}
+export default {removeMember, getMembers};

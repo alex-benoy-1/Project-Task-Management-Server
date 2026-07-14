@@ -50,4 +50,15 @@ const removeMemberById = async (orgId, memberId) => {
     return result.rows[0];
 }
 
-export default {createOrgMember, membershipStatus, removeMemberById};
+const getAllMembers = async (orgId) => {
+    const query = `SELECT * FROM organization_members 
+        WHERE 
+            organization_id = $1`;
+
+    const result = await pgdb.query(query,
+        [orgId]
+    );
+    return result.rows;
+}
+
+export default {createOrgMember, membershipStatus, removeMemberById, getAllMembers};

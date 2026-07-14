@@ -12,4 +12,16 @@ const removeMember = async (req, res) => {
     }
 }
 
-export default {removeMember};
+const getMembers = async (req, res) => {
+    try {
+        const {orgId} = req.params;
+        
+        const result = await OrgMemberService.getMembers(orgId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default {removeMember, getMembers};

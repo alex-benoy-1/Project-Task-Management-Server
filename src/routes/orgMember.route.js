@@ -11,5 +11,8 @@ orgMemberRouter.delete(
     authMiddleware, getMembership, requireRole("admin","manager"),
     OrgMemberController.removeMember
 )
+orgMemberRouter.get("/:orgId/members",
+    authMiddleware, getMembership, OrgMemberController.getMembers
+)
 
 export default orgMemberRouter;
