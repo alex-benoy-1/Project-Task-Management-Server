@@ -6,13 +6,20 @@ import requireRole from "../middleware/requireRole.middleware.js";
 
 const orgMemberRouter = express.Router();
 
+//remove member from org
 orgMemberRouter.delete(
     "/:memberId/org/:orgId", 
     authMiddleware, getMembership, requireRole("admin","manager"),
     OrgMemberController.removeMember
 )
+//get all members of org
 orgMemberRouter.get("/:orgId/members",
     authMiddleware, getMembership, OrgMemberController.getMembers
+)
+
+//add new members of org
+orgMemberRouter.post("/:orgId/members",
+    authMiddleware, getMembership, requireRole("admin","manager"), OrgMemberController.addMember
 )
 
 export default orgMemberRouter;

@@ -2,7 +2,7 @@ import OrgMemberModel from "../models/orgMember.model.js";
 
 const checkMember = async (req, res, next) => {
     try {
-        const {memberId} = req.body;
+        const memberId = req.body.memberId;
         const {orgId} = req.params;
         console.log("orgId:", orgId);
         console.log("memberId:", memberId);

@@ -24,4 +24,17 @@ const getMembers = async (req, res) => {
     }
 }
 
-export default {removeMember, getMembers};
+const addMember =async (req, res) => {
+    try {
+        const {orgId} = req.params;
+        const {memberId, role} = req.body;
+
+        const result = await OrgMemberService.addMember(orgId, memberId, role);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default {removeMember, getMembers, addMember};

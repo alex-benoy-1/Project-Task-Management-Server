@@ -18,4 +18,15 @@ const getMembers = async (orgId) => {
     }
     return members;
 }
-export default {removeMember, getMembers};
+
+const addMember = async (orgId, memberId, role) => {
+    const member = await OrgMemberModel.createOrgMember(orgId, memberId, role);
+
+    if(!member) {
+        throw new Error("Member not added");
+    }
+
+    return member;
+}
+
+export default {removeMember, getMembers, addMember};
