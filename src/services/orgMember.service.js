@@ -29,4 +29,14 @@ const addMember = async (orgId, memberId, role) => {
     return member;
 }
 
-export default {removeMember, getMembers, addMember};
+const changeRole = async (orgId, memberId, role) => {
+    const member = await OrgMemberModel.changeRole(orgId, memberId, role);
+
+    if(!member) {
+        throw new Error("Member role not chnaged");
+    }
+
+    return member;
+}
+
+export default {removeMember, getMembers, addMember, changeRole};

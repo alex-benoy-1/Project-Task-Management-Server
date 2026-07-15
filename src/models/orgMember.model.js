@@ -26,14 +26,14 @@ const membershipStatus = async (orgId, userId) => {
     return result.rows[0];
 }
 
-const changeRole = async (orgId, userId, role) => {
+const changeRole = async (orgId, memberId, role) => {
     const query = `UPDATE organization_members
         SET role = $1
         WHERE user_id = $2
             AND organization_id = $3
         RETURNING *`;
     const result = await pgdb.query(query,
-        [role, userId, orgId]
+        [role, memberId, orgId]
     );
     return result.rows[0];
 }
@@ -61,4 +61,4 @@ const getAllMembers = async (orgId) => {
     return result.rows;
 }
 
-export default {createOrgMember, membershipStatus, removeMemberById, getAllMembers};
+export default {createOrgMember, membershipStatus, removeMemberById, getAllMembers, changeRole};

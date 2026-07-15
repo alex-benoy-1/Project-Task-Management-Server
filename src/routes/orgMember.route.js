@@ -19,7 +19,14 @@ orgMemberRouter.get("/:orgId/members",
 
 //add new members of org
 orgMemberRouter.post("/:orgId/members",
-    authMiddleware, getMembership, requireRole("admin","manager"), OrgMemberController.addMember
+    authMiddleware, getMembership, requireRole("admin","manager"), 
+    OrgMemberController.addMember
+)
+
+//add new members of org
+orgMemberRouter.patch("/:memberId/org/:orgId",
+    authMiddleware, getMembership, requireRole("admin","manager"), 
+    OrgMemberController.changeRole
 )
 
 export default orgMemberRouter;

@@ -37,4 +37,17 @@ const addMember =async (req, res) => {
     }
 }
 
-export default {removeMember, getMembers, addMember};
+const changeRole = async (req, res) => {
+    try {
+        const {memberId,orgId} = req.params;
+        const {role} = req.body;
+
+        const result = await OrgMemberService.changeRole(orgId, memberId, role);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default {removeMember, getMembers, addMember, changeRole};
