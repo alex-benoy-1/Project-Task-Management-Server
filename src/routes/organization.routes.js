@@ -9,9 +9,9 @@ import checkMember from "../middleware/checkMember.middleware.js";
 const orgRouter = express.Router();
 
 //create new organization
-orgRouter.post("/new-organization", authMiddleware, OrganizationController.createOrganization);
+orgRouter.post("/", authMiddleware, OrganizationController.createOrganization);
 //get all of user's organization 
-orgRouter.get("/myorgs", authMiddleware, OrganizationController.getOrganizationByUser);
+orgRouter.get("/", authMiddleware, OrganizationController.getOrganizationByUser);
 //get specific org by id
 orgRouter.get("/:orgId", authMiddleware, getMembership, OrganizationController.getOrgByOrgId);
 //delete org

@@ -8,7 +8,7 @@ const orgMemberRouter = express.Router();
 
 //remove member from org
 orgMemberRouter.delete(
-    "/:memberId/org/:orgId", 
+    "/:orgId/members/:memberId", 
     authMiddleware, getMembership, requireRole("admin","manager"),
     OrgMemberController.removeMember
 )
@@ -23,8 +23,8 @@ orgMemberRouter.post("/:orgId/members",
     OrgMemberController.addMember
 )
 
-//add new members of org
-orgMemberRouter.patch("/:memberId/org/:orgId",
+//change member role
+orgMemberRouter.patch("/:orgId/members/:memberId",
     authMiddleware, getMembership, requireRole("admin","manager"), 
     OrgMemberController.changeRole
 )

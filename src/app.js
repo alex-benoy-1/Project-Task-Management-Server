@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("/org", orgRouter);
-app.use("/member", orgMemberRouter);
+app.use("/organizations", orgRouter);
+app.use("/org", orgMemberRouter);
 
 export default app;
