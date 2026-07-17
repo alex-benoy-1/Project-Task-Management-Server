@@ -30,4 +30,23 @@ const createProject = async (orgId, name, description, userId) => {
     }
 }
 
-export default {createProject};
+const getAllProjects = async (orgId, userId) => {
+    const projects = await ProjectModel.getProjectsByOrgIdByUserId(orgId, userId);
+
+    if(projects.length === 0) {
+        return {
+            projects: [],
+            count: 0
+        };
+    } else {
+        return {
+            projects,
+            count: projects.length
+        };
+    }
+}
+
+export default {
+    createProject,
+    getAllProjects
+};

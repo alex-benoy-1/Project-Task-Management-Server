@@ -14,4 +14,18 @@ const createProject = async (req, res) => {
     }
 }
 
-export default {createProject}
+const getAllProjects = async (req, res) => {
+    try {
+        const {orgId} = req.params;
+        const userId = req.user.id;
+        const result = await ProjectService.getAllProjects(orgId, userId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+export default {
+    createProject,
+    getAllProjects
+}
