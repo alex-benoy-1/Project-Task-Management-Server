@@ -12,4 +12,20 @@ const createMember = async (projectId, memberId, role, client = pgdb) => {
     return result.rows[0];
 }
 
-export default {createMember}
+const getMember = async (projectId, memberId) => {
+    const query = `SELECT * FROM project_members 
+        WHERE 
+            project_id = $1
+        AND
+            user_id = $2`;
+
+    const result = await pgdb.query(query,
+        [projectId, memberId]
+    );
+    return result.rows[0];
+}
+
+export default {
+    createMember,
+    getMember
+}

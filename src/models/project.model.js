@@ -38,7 +38,16 @@ const getProjectsByOrgIdByUserId = async (orgId, userId) => {
     return result.rows;
 }
 
+const getProject = async (projectId) => {
+    const query = `
+        SELECT * FROM projects
+        WHERE id = $1`;
+    const result = await pgdb.query(query, [projectId]);
+    return result.rows[0];
+}
+
 export default {
     createProject,
-    getProjectsByOrgIdByUserId
+    getProjectsByOrgIdByUserId,
+    getProject
 };

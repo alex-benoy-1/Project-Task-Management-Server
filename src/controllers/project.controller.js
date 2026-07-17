@@ -25,7 +25,20 @@ const getAllProjects = async (req, res) => {
         res.status(400).json({message: err.message});
     }
 }
+
+const getProject = async (req, res) => {
+    try {
+        const {projectId} = req.params;
+        const result = await ProjectService.getProject(projectId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
 export default {
     createProject,
-    getAllProjects
+    getAllProjects,
+    getProject
 }

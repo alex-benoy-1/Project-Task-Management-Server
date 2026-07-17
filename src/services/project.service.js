@@ -33,6 +33,10 @@ const createProject = async (orgId, name, description, userId) => {
 const getAllProjects = async (orgId, userId) => {
     const projects = await ProjectModel.getProjectsByOrgIdByUserId(orgId, userId);
 
+    if(!projects) {
+        throw new Error("No projects found");
+    }
+
     if(projects.length === 0) {
         return {
             projects: [],
@@ -46,7 +50,18 @@ const getAllProjects = async (orgId, userId) => {
     }
 }
 
+const getProject = async (projectId) => {
+    const project = await ProjectModel.getProject(projectId);
+
+    if(!project) {
+        throw new Error("No project found");
+    }
+
+    return project;
+}
+
 export default {
     createProject,
-    getAllProjects
+    getAllProjects,
+    getProject
 };
