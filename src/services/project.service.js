@@ -60,8 +60,19 @@ const getProject = async (projectId) => {
     return project;
 }
 
+const deletePtoject = async (projectId) => {
+    const project = await ProjectModel.deletePtoject(projectId);
+
+    if(!project) {
+        throw new Error("No project found");
+    }
+
+    return project;
+}
+
 export default {
     createProject,
     getAllProjects,
-    getProject
+    getProject,
+    deletePtoject
 };

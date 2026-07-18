@@ -46,8 +46,19 @@ const getProject = async (projectId) => {
     return result.rows[0];
 }
 
+const deletePtoject = async (projectId) => {
+    const query = `DELETE FROM projects
+        WHERE id = $1
+        RETURNING *;`
+    const result = await pgdb.query(query,
+        [projectId]
+    );
+    return result.rows[0];
+}
+
 export default {
     createProject,
     getProjectsByOrgIdByUserId,
-    getProject
+    getProject,
+    deletePtoject
 };

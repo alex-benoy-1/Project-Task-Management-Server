@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/auth.middleware.js";
 import getMembership from "../middleware/orgMember.middleware.js";
 import requireRole from "../middleware/requireRole.middleware.js";
 import projectMember from "../middleware/projectMember.middleware.js";
+import projectOwner from "../middleware/projectOwner.middleware.js";
 
 const projectRouter = express.Router();
 
@@ -13,5 +14,7 @@ projectRouter.post("/organization/:orgId", authMiddleware, getMembership, requir
 projectRouter.get("/organization/:orgId", authMiddleware, getMembership, ProjectController.getAllProjects);
 //Get a specific project by ID
 projectRouter.get("/:projectId", authMiddleware, projectMember, ProjectController.getProject);
+//Delete a specific project
+projectRouter.delete("/:projectId", authMiddleware, projectOwner,ProjectController.deletePtoject);
 
 export default projectRouter;
