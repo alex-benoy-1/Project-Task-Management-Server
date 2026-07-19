@@ -60,7 +60,7 @@ const getProject = async (projectId) => {
     return project;
 }
 
-const deletePtoject = async (projectId) => {
+const deleteProject = async (projectId) => {
     const project = await ProjectModel.deletePtoject(projectId);
 
     if(!project) {
@@ -70,9 +70,20 @@ const deletePtoject = async (projectId) => {
     return project;
 }
 
+const updateProject = async (name, description, projectId) => {
+    const project = await ProjectModel.updateProject(name, description, projectId);
+    if(!project) {
+        throw new Error("Project not updated");
+    }
+
+    return project;
+}
+
+
 export default {
     createProject,
     getAllProjects,
     getProject,
-    deletePtoject
+    deleteProject,
+    updateProject
 };

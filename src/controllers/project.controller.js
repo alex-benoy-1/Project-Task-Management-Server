@@ -37,10 +37,22 @@ const getProject = async (req, res) => {
     }
 }
 
-const deletePtoject = async (req, res) => {
+const deleteProject = async (req, res) => {
     try {
         const {projectId} = req.params;
-        const result = await ProjectService.deletePtoject(projectId);
+        const result = await ProjectService.deleteProject(projectId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+const updateProject = async (req, res) => {
+    try {
+        const {projectId} = req.params;
+        const {name, description} = req.body;
+        const result = await ProjectService.updateProject(name, description, projectId);
 
         res.status(201).json(result);
     } catch (err) {
@@ -52,5 +64,6 @@ export default {
     createProject,
     getAllProjects,
     getProject,
-    deletePtoject
+    deleteProject,
+    updateProject
 }

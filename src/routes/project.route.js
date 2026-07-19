@@ -15,6 +15,8 @@ projectRouter.get("/organization/:orgId", authMiddleware, getMembership, Project
 //Get a specific project by ID
 projectRouter.get("/:projectId", authMiddleware, projectMember, ProjectController.getProject);
 //Delete a specific project
-projectRouter.delete("/:projectId", authMiddleware, projectOwner,ProjectController.deletePtoject);
+projectRouter.delete("/:projectId", authMiddleware, projectOwner,ProjectController.deleteProject);
+//Update project name and description
+projectRouter.patch("/:projectId", authMiddleware, projectOwner, ProjectController.updateProject);
 
 export default projectRouter;
