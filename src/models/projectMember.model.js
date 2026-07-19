@@ -25,7 +25,20 @@ const getMember = async (projectId, memberId) => {
     return result.rows[0];
 }
 
+const getMembers = async (projectId) => {
+    const query = `
+        SELECT * FROM project_members
+        WHERE project_id = $1`;
+
+    const result = await pgdb.query(query,
+        [projectId]
+    );
+    return result.rows;
+}
+
 export default {
     createMember,
-    getMember
+    getMember,
+    getMembers
 }
+///api/projects/:projectId/members
