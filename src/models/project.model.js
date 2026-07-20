@@ -1,12 +1,12 @@
 import pgdb from "../configs/db.config.js";
 
-const createProject = async (orgId, name, description, userId, client = pgdb) => {
+const createProject = async (orgId, name, description, client = pgdb) => {
     const query = `
-        INSERT INTO projects (organization_id, name, description, created_by)
-        VALUES ($1, $2, $3, $4)
+        INSERT INTO projects (organization_id, name, description)
+        VALUES ($1, $2, $3)
         RETURNING *`;
     const result = await client.query(query,
-        [orgId, name, description, userId]
+        [orgId, name, description]
     );
 
     return result.rows[0];
@@ -22,7 +22,6 @@ const getProjectsByOrgIdByUserId = async (orgId, userId) => {
             p.organization_id,
             p.name,
             p.description,
-            p.created_by,
             p.created_at,
             p.updated_at,
             pm.user_id,

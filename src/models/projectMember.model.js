@@ -36,9 +36,10 @@ const getMembers = async (projectId) => {
     return result.rows;
 }
 
+
 export default {
     createMember,
     getMember,
-    getMembers
+    getMembers,
 }
 ///api/projects/:projectId/members

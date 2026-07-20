@@ -7,7 +7,7 @@ const createProject = async (orgId, name, description, userId) => {
     const client = await pgdb.connect();
     try {
         await client.query("BEGIN");
-        const project = await ProjectModel.createProject(orgId, name, description, userId, client);
+        const project = await ProjectModel.createProject(orgId, name, description, client);
         const member = await ProjectMemberModel.createMember(project.id,userId,"owner", client);
 
         await client.query("COMMIT");
@@ -18,7 +18,6 @@ const createProject = async (orgId, name, description, userId) => {
                 organizations: project.organization_id,
                 name: project.name,
                 description: project.description,
-                createdBy: member.user_id,
                 role: member.role
             }
         }

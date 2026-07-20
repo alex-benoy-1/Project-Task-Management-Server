@@ -11,4 +11,19 @@ const getMembers = async (req, res) => {
     }
 }
 
-export default {getMembers};
+const addMember = async (req, res) => {
+    try {
+        const {projectId} = req.params;
+        const {memberId, role} = req.body;
+
+        const result = await ProjectMemberService.addMember(projectId, memberId, role);
+        res.status(201).json(result);
+    } catch(err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
+export default {
+    getMembers,
+    addMember
+};

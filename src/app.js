@@ -17,6 +17,6 @@ app.use("/auth", authRoutes);
 app.use("/organizations", orgRouter);
 app.use("/org", orgMemberRouter);
 app.use("/projects", projectRouter);
-app.use("/members", projectMemberRouter);
+app.use("/projects", projectMemberRouter);
 
 export default app;

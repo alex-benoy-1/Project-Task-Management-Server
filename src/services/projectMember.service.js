@@ -20,4 +20,17 @@ const getMembers = async (projectId) => {
     }
 }
 
-export default {getMembers};
+const addMember = async (projectId, memberId, role) => {
+    const member = await ProjectMemberModel.createMember(projectId, memberId, role);
+
+    if(!member) {
+        throw new Error("Member not created");
+    }
+
+    return member;
+}
+
+export default {
+    getMembers,
+    addMember
+};
