@@ -36,10 +36,21 @@ const getMembers = async (projectId) => {
     return result.rows;
 }
 
+const deleteMember = async (projectId, memberId) => {
+    const query = `
+        DELETE FROM project_members
+        WHERE project_id = $1
+            AND user_id = $2
+        RETURNING *`;
+
+    const result = await pgdb.query(query, [projectId, memberId]);
+
+    return result.rows[0];
+}
 
 export default {
     createMember,
     getMember,
     getMembers,
+    deleteMember
 }
-///api/projects/:projectId/members

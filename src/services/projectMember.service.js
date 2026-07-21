@@ -30,7 +30,18 @@ const addMember = async (projectId, memberId, role) => {
     return member;
 }
 
+const removeMember = async (projectId, memberId) => {
+    const member = await ProjectMemberModel.deleteMember(projectId, memberId);
+
+    if(!member) {
+        throw new Error("Member not created");
+    }
+
+    return member;    
+}
+
 export default {
     getMembers,
-    addMember
+    addMember,
+    removeMember
 };
