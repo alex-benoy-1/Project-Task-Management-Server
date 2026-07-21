@@ -48,9 +48,22 @@ const deleteMember = async (projectId, memberId) => {
     return result.rows[0];
 }
 
+const updateRole = async (projectId, memberId, role) => {
+    const query = `
+        UPDATE project_members
+        SET role = $1
+        WHERE project_id = $2
+            AND user_id = $3
+        RETURNING *`;
+    const result = await pgdb.query(query, [role, projectId, memberId]);
+
+    return result.rows[0];
+}
+
 export default {
     createMember,
     getMember,
     getMembers,
-    deleteMember
+    deleteMember,
+    updateRole
 }

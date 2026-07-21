@@ -50,9 +50,20 @@ const getMember = async (projectId, memberId) => {
     return member;
 }
 
+const changeRole = async (projectId, memberId, role) => {
+    const member = await ProjectMemberModel.updateRole(projectId, memberId, role);
+
+    if(!member) {
+        throw new Error("Member role not chnaged");
+    }
+
+    return member;
+}
+
 export default {
     getMembers,
     addMember,
     removeMember,
-    getMember
+    getMember,
+    changeRole
 };

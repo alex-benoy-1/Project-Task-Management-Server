@@ -45,9 +45,23 @@ const getMember = async (req, res) => {
     }
 }
 
+const changeRole = async (req, res) => {
+    try {
+        const {projectId, memberId} = req.params;
+        const {role} = req.body;
+
+        const result = await ProjectMemberService.changeRole(projectId, memberId, role);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
 export default {
     getMembers,
     addMember,
     removeMember,
-    getMember
+    getMember,
+    changeRole
 };

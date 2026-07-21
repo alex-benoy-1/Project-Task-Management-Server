@@ -15,5 +15,7 @@ projectMemberRouter.post("/:projectId/members", authMiddleware, projectMember, p
 projectMemberRouter.delete("/:projectId/members/:memberId", authMiddleware, projectMember, projectRequireRole("owner", "lead"), projectMemberRoleNot("owner"), ProjectMemberController.removeMember);
 //Get Member By ID
 projectMemberRouter.get("/:projectId/members/:memberId", authMiddleware, projectMember, ProjectMemberController.getMember);
+//Change member role
+projectMemberRouter.patch("/:projectId/members/:memberId", authMiddleware, projectMember, projectRequireRole("owner", "lead"), projectMemberRoleNot("owner"), ProjectMemberController.changeRole);
 
 export default projectMemberRouter;
