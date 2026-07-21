@@ -40,8 +40,19 @@ const removeMember = async (projectId, memberId) => {
     return member;    
 }
 
+const getMember = async (projectId, memberId) => {
+    const member = await ProjectMemberModel.getMember(projectId, memberId);
+
+    if(!member) {
+        throw new Error("Member not created");
+    }
+
+    return member;
+}
+
 export default {
     getMembers,
     addMember,
-    removeMember
+    removeMember,
+    getMember
 };

@@ -13,6 +13,7 @@ projectMemberRouter.get("/:projectId/members", authMiddleware, projectMember, Pr
 projectMemberRouter.post("/:projectId/members", authMiddleware, projectMember, projectRequireRole("owner", "lead"), memberOfOrg, ProjectMemberController.addMember)
 //Remove a member
 projectMemberRouter.delete("/:projectId/members/:memberId", authMiddleware, projectMember, projectRequireRole("owner", "lead"), projectMemberRoleNot("owner"), ProjectMemberController.removeMember);
-
+//Get Member By ID
+projectMemberRouter.get("/:projectId/members/:memberId", authMiddleware, projectMember, ProjectMemberController.getMember);
 
 export default projectMemberRouter;

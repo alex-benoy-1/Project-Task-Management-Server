@@ -34,8 +34,20 @@ const removeMember = async (req, res) => {
     }
 }
 
+const getMember = async (req, res) => {
+    try {
+        const {projectId, memberId} = req.params;
+        const result = await ProjectMemberService.getMember(projectId, memberId);
+
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
+
 export default {
     getMembers,
     addMember,
-    removeMember
+    removeMember,
+    getMember
 };
