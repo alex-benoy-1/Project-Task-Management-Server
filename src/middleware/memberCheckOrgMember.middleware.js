@@ -1,6 +1,6 @@
 import OrgMemberModel from "../models/orgMember.model.js";
 
-const checkMember = async (req, res, next) => {
+const memberCheckOrgMember = async (req, res, next) => {
     try {
         const memberId = req.body.memberId;
         const {orgId} = req.params;
@@ -23,4 +23,4 @@ const checkMember = async (req, res, next) => {
     }
 }
 
-export default checkMember;
+export default memberCheckOrgMember;

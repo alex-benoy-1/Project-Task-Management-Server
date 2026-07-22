@@ -1,6 +1,6 @@
 import OrganizationModel from "../models/organization.model.js";
 
-const checkOwner = async (req, res, next) => {
+const userOrgOwner = async (req, res, next) => {
     try {
         const userId = req.user.id;
         const {orgId} = req.params;
@@ -17,4 +17,4 @@ const checkOwner = async (req, res, next) => {
         }
 }
 
-export default checkOwner;
+export default userOrgOwner;

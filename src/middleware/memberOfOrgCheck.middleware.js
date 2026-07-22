@@ -1,7 +1,7 @@
 import OrgMemberModel from "../models/orgMember.model.js";
 import ProjectModel from "../models/project.model.js";
 
-const memberOfOrg = async (req, res, next) => {
+const memberOfOrgCheck = async (req, res, next) => {
     try {
         const memberId = req.body.memberId;
         const {projectId} = req.params;
@@ -22,4 +22,4 @@ const memberOfOrg = async (req, res, next) => {
     }
 }
 
-export default memberOfOrg;
+export default memberOfOrgCheck;
