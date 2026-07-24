@@ -21,4 +21,23 @@ const getTasksByProjectId = async (projectId) => {
     
 }
 
-export default {getTasksByProjectId};
+const updateTask = async (taskId, updates) => {
+    const existingTask = await TaskModel.getTask(taskId);
+    if(!existingTask) {
+        throw new Error("No task found");
+    }
+
+    const updatedTask = {
+        ...existingTask,
+        ...updates
+    }
+
+    const task = await TaskModel.updateTask(taskId, updatedTask);
+
+    return task;
+}
+
+export default {
+    getTasksByProjectId,
+    updateTask
+};

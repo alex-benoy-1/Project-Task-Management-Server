@@ -2,10 +2,13 @@ import express from "express";
 import authMiddleware from "../middleware/auth.middleware.js";
 import TaskController from "../controllers/task.controller.js";
 import projectMember from "../middleware/projectMember.middleware.js";
+import projectOwner from "../middleware/projectOwner.middleware.js";
 
 const taskRouter = express.Router();
 
 //Get all tasks in a project
 taskRouter.get("/:projectId/tasks", authMiddleware, projectMember, TaskController.getAllTasks);
+//Update a task 
+taskRouter.get("/:projectId/tasks/:taskId", authMiddleware, projectMember, projectOwner, TaskController.updateTask);
 
 export default taskRouter;
