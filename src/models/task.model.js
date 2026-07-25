@@ -63,10 +63,22 @@ const deleteTask = async (taskId) => {
     return result.rows[0];
 }
 
+const updateStatus = async (taskId, status) => {
+    const query = `
+        UPDATE tasks
+        SET status = $1
+        WHERE id = $2
+        RETURNING *`;
+    const result = await pgdb.query(query, [taskId, status]);
+
+    return result.rows[0];
+}
+
 export default {
     getTasksByProjectId,
     newTask,
     getTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    updateStatus
 };
