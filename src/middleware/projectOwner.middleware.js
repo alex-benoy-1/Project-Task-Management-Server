@@ -4,7 +4,7 @@ import ProjectMemberModel from "../models/projectMember.model.js";
 const projectOwner = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const {projectId} = req.params;
+        const projectId = req.params.projectId ?? req.project?.id;
         const member = await ProjectMemberModel.getMember(projectId, userId);
         if(!member) {
             return res.status(404).json({message: "Not member found"});
