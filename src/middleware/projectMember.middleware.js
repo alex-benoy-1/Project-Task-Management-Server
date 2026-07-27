@@ -3,7 +3,7 @@ import ProjectMemberModel from "../models/projectMember.model.js";
 const projectMember = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const {projectId} = req.params;
+        const projectId = req.params.projectId ?? req.project?.id;
 
         const member = await ProjectMemberModel.getMember(projectId, userId);
 

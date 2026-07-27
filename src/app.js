@@ -5,6 +5,7 @@ import orgMemberRouter from "./routes/orgMember.route.js";
 import projectRouter from "./routes/project.route.js";
 import projectMemberRouter from "./routes/projectMember.route.js";
 import taskRouter from "./routes/task.route.js";
+import commentRouter from "./routes/comment.route.js";
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use("/org", orgMemberRouter);
 app.use("/projects", projectRouter);
 app.use("/projects", projectMemberRouter);
 app.use("/projects", taskRouter);
+app.use("/tasks", commentRouter);
 
 export default app;
