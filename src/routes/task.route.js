@@ -10,8 +10,8 @@ const taskRouter = express.Router();
 
 //Get all tasks in a project
 taskRouter.get("/:projectId/tasks", authMiddleware, projectMember, TaskController.getAllTasks);
-//Update a task 
-taskRouter.get("/:projectId/tasks/:taskId", authMiddleware, projectMember, projectOwner, TaskController.updateTask);
+//get a task 
+taskRouter.get("/tasks/:taskId", authMiddleware, getProjectFromTask, projectMember, TaskController.getTask);
 //Add new task
 taskRouter.post("/:projectId/tasks", authMiddleware, projectOwner, TaskController.newTask);
 //delete a task 

@@ -1,8 +1,7 @@
 import InvitationModel from "../models/invitation.model.js";
 
 const newInvitation = async (orgId, email, role) => {
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     const invitation = await InvitationModel.newInvitation(orgId, email, role, expiresAt);
         
     if(!invitation) {
