@@ -48,3 +48,5 @@ invitationRouter.patch(
     invForUser,
     InvitationModel.acceptInvitation
 )
+
+export default invitationRouter;
