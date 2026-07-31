@@ -23,6 +23,19 @@ const createProject = async (orgId, name, description, userId) => {
             }
         });
 
+        await logActivity({
+            orgId: project.organization_id,
+            userId: userId,
+            entityType: "Project Member",
+            entityId: member.id,
+            action: "Project member added",
+            metaData: {
+                projectName : name,
+                memeber : userId,
+                role: member.role
+            }
+        })
+
         await client.query("COMMIT");
 
         return {
@@ -72,22 +85,40 @@ const getProject = async (projectId) => {
     return project;
 }
 
-const deleteProject = async (projectId) => {
+const deleteProject = async (projectId, userId) => {
     const project = await ProjectModel.deletePtoject(projectId);
-
+    
     if(!project) {
         throw new Error("No project found");
     }
+    await logActivity({
+        orgId: project.organization_id,
+        userId: userId,
+        entityType: "Project",
+        entityId: project.id,
+        action: "Project deleted",
+        metaData: {}
+    })
 
     return project;
 }
 
-const updateProject = async (name, description, projectId) => {
+const updateProject = async (name, description, projectId, userId) => {
     const project = await ProjectModel.updateProject(name, description, projectId);
     if(!project) {
         throw new Error("Project not updated");
     }
-
+    await logActivity({
+        orgId: project.organization_id,
+        userId: userId,
+        entityType: "Project",
+        entityId: project.id,
+        action: "Project Updated",
+        metaData: {
+            newName : name,
+            newDescription: description
+        }
+    })
     return project;
 }
 

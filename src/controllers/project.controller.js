@@ -40,7 +40,7 @@ const getProject = async (req, res) => {
 const deleteProject = async (req, res) => {
     try {
         const {projectId} = req.params;
-        const result = await ProjectService.deleteProject(projectId);
+        const result = await ProjectService.deleteProject(projectId, req.user.id);
 
         res.status(201).json(result);
     } catch (err) {
@@ -52,7 +52,7 @@ const updateProject = async (req, res) => {
     try {
         const {projectId} = req.params;
         const {name, description} = req.body;
-        const result = await ProjectService.updateProject(name, description, projectId);
+        const result = await ProjectService.updateProject(name, description, projectId, req.user.id);
 
         res.status(201).json(result);
     } catch (err) {
