@@ -1,10 +1,10 @@
 import express from "express";
-import authMiddleware from "../middleware/auth.middleware";
-import getProjectFromTask from "../middleware/getProjectFromTask.middleware";
-import projectMember from "../middleware/projectMember.middleware";
-import CommentController from "../controllers/comment.controller";
-import getTaskFromComment from "../middleware/getTaskFromComment.middelware";
-import commentOwner from "../middleware/commentOwner.middleware";
+import authMiddleware from "../middleware/auth.middleware.js";
+import getProjectFromTask from "../middleware/getProjectFromTask.middleware.js";
+import projectMember from "../middleware/projectMember.middleware.js";
+import CommentController from "../controllers/comment.controller.js";
+import getTaskFromComment from "../middleware/getTaskFromComment.middelware.js";
+import commentOwner from "../middleware/commentOwner.middleware.js";
 
 const commentRouter = express.Router();
 

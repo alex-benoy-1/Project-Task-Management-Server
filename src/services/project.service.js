@@ -1,6 +1,7 @@
 import ProjectModel from "../models/project.model.js";
 import ProjectMemberModel from "../models/projectMember.model.js";
 import pgdb from "../configs/db.config.js";
+import logActivity from "../models/activity.model.js";
 
 const createProject = async (orgId, name, description, userId) => {
     
@@ -9,6 +10,18 @@ const createProject = async (orgId, name, description, userId) => {
         await client.query("BEGIN");
         const project = await ProjectModel.createProject(orgId, name, description, client);
         const member = await ProjectMemberModel.createMember(project.id,userId,"owner", client);
+
+        await logActivity({
+            orgId: orgId,
+            userId: userId,
+            entityType: "Project",
+            entityId: project.id,
+            action: "Project created",
+            metaData: {
+                projectName : project.name,
+                description : project.description
+            }
+        });
 
         await client.query("COMMIT");
 

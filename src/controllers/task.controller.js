@@ -36,7 +36,7 @@ const getTask = async (req, res) => {
 const newTask = async (req, res) => {
     try {
         const {projectId} = req.params;
-        const {title, description, status, status, priority, createdBy, dueDate} = req.body;
+        const {title, description, status, priority, createdBy, dueDate} = req.body;
         const result = await TaskService.newTask(projectId, title, description, status, priority, createdBy, dueDate);
 
         res.status(201).json(result);
