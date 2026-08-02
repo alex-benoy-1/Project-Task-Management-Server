@@ -3,7 +3,7 @@ import AuthService from "../services/auth.service.js";
 
 const register = async (req, res) => {
     try {
-        const {fName, lName, email, password} = req.body;
+        const {fName, lName, email, password} = req.validatedData.body;
         const result = await AuthService.register(
             fName, lName, email, password
         );
