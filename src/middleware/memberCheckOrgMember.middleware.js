@@ -2,8 +2,8 @@ import OrgMemberModel from "../models/orgMember.model.js";
 
 const memberCheckOrgMember = async (req, res, next) => {
     try {
-        const memberId = req.body.memberId;
-        const {orgId} = req.params;
+        const memberId = req.validatedData.body.memberId;
+        const {orgId} = req.validatedData.params;
         console.log("orgId:", orgId);
         console.log("memberId:", memberId);
         const member = await OrgMemberModel.membershipStatus(orgId, memberId);

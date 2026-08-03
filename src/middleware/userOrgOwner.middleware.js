@@ -3,7 +3,7 @@ import OrganizationModel from "../models/organization.model.js";
 const userOrgOwner = async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const {orgId} = req.params;
+        const {orgId} = req.validatedData.params;
 
         const owner = await OrganizationModel.getOrgByOwnerId(orgId, userId);
         
