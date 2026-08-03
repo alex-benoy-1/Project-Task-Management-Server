@@ -15,11 +15,28 @@ const registerSchema = z.object ({
             .email(),
         password: z 
             .string()
-            .min(8)
+            .min(8, "Passsword must be at least 8 characters long")
             .regex(/[A-Z]/, "Must contain uppercase")
             .regex(/[a-z]/, "Must contain lowercase")
             .regex(/[0-9]/, "Must contain number")
     })
 })
 
-export {registerSchema};
+const loginSchema = z.object ({
+    body: z.object({
+        email: z
+            .email()
+            .string(),
+        password: z
+            .string()
+            .min(8, "Passsword must be at least 8 characters long")
+            .regex(/[A-Z]/, "Must contain uppercase")
+            .regex(/[a-z]/, "Must contain lowercase")
+            .regex(/[0-9]/, "Must contain number")
+    })
+})
+
+export {
+    registerSchema,
+    loginSchema
+};
