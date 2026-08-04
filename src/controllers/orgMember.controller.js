@@ -2,7 +2,7 @@ import OrgMemberService from "../services/orgMember.service.js";
 
 const removeMember = async (req, res) => {
     try {
-        const {orgId, memberId} = req.params;
+        const {orgId, memberId} = req.validatedData.params;
 
         const result = await OrgMemberService.removeMember(orgId, memberId);
         res.status(201).json(result);
@@ -26,8 +26,8 @@ const getMembers = async (req, res) => {
 
 const addMember =async (req, res) => {
     try {
-        const {orgId} = req.params;
-        const {memberId, role} = req.body;
+        const {orgId} = req.validatedData.params;
+        const {memberId, role} = req.validatedData.body;
 
         const result = await OrgMemberService.addMember(orgId, memberId, role);
 
@@ -39,7 +39,7 @@ const addMember =async (req, res) => {
 
 const changeRole = async (req, res) => {
     try {
-        const {memberId,orgId} = req.params;
+        const {memberId,orgId} = req.validatedData.params;
         const {role} = req.body;
 
         const result = await OrgMemberService.changeRole(orgId, memberId, role);

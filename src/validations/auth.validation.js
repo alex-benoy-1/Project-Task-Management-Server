@@ -19,7 +19,7 @@ const registerSchema = z.object ({
             .regex(/[A-Z]/, "Must contain uppercase")
             .regex(/[a-z]/, "Must contain lowercase")
             .regex(/[0-9]/, "Must contain number")
-    })
+    }).strict()
 })
 
 const loginSchema = z.object ({
@@ -33,7 +33,7 @@ const loginSchema = z.object ({
             .regex(/[A-Z]/, "Must contain uppercase")
             .regex(/[a-z]/, "Must contain lowercase")
             .regex(/[0-9]/, "Must contain number")
-    })
+    }).strict()
 })
 
 export {
