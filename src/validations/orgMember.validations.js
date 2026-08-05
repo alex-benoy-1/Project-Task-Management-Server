@@ -27,8 +27,15 @@ const changeRoleSchema = z.object ({
     }).strict()
 })
 
+const getAllMembersSchema = z.object ({
+    params: z.object ({
+        orgId: z.uuid(),
+    }).strict()
+})
+
 export {
     addMemberSchema,
     deleteMemberSchema,
-    changeRoleSchema
+    changeRoleSchema,
+    getAllMembersSchema
 }

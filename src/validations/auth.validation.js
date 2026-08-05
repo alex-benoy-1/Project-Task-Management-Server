@@ -25,8 +25,8 @@ const registerSchema = z.object ({
 const loginSchema = z.object ({
     body: z.object({
         email: z
-            .email()
-            .string(),
+            .string()
+            .email(),
         password: z
             .string()
             .min(8, "Passsword must be at least 8 characters long")

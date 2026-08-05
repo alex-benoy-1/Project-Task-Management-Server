@@ -4,7 +4,7 @@ import authMiddleware from "../middleware/auth.middleware.js";
 import getMembership from "../middleware/orgMember.middleware.js";
 import requireRole from "../middleware/requireRole.middleware.js";
 import validate from "../middleware/validate.middleware.js";
-import { addMemberSchema, changeRoleSchema, deleteMemberSchema } from "../validations/orgMember.validations.js";
+import { addMemberSchema, changeRoleSchema, deleteMemberSchema, getAllMembersSchema } from "../validations/orgMember.validations.js";
 
 const orgMemberRouter = express.Router();
 
@@ -16,7 +16,7 @@ orgMemberRouter.delete(
 )
 //get all members of org
 orgMemberRouter.get("/:orgId/members",
-    authMiddleware, getMembership, OrgMemberController.getMembers
+    authMiddleware, validate(getAllMembersSchema), getMembership, OrgMemberController.getMembers
 )
 
 //add new members of org

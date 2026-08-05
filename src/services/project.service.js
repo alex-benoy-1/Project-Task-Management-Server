@@ -86,7 +86,7 @@ const getProject = async (projectId) => {
 }
 
 const deleteProject = async (projectId, userId) => {
-    const project = await ProjectModel.deletePtoject(projectId);
+    const project = await ProjectModel.deleteProject(projectId);
     
     if(!project) {
         throw new Error("No project found");
