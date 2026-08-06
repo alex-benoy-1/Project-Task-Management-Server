@@ -4,7 +4,7 @@ const createProject = async (req, res) => {
     try {
         const {name, description} = req.body;
         const userId = req.user.id;
-        const {orgId} = req.params;
+        const {orgId} = req.validatedData.params;
 
         const result = await ProjectService.createProject(orgId, name, description, userId);
 
@@ -16,7 +16,7 @@ const createProject = async (req, res) => {
 
 const getAllProjects = async (req, res) => {
     try {
-        const {orgId} = req.params;
+        const {orgId} = req.validatedData.params;
         const userId = req.user.id;
         const result = await ProjectService.getAllProjects(orgId, userId);
 
@@ -28,7 +28,7 @@ const getAllProjects = async (req, res) => {
 
 const getProject = async (req, res) => {
     try {
-        const {projectId} = req.params;
+        const {projectId} = req.validatedData.params;
         const result = await ProjectService.getProject(projectId);
 
         res.status(201).json(result);
@@ -39,7 +39,7 @@ const getProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
     try {
-        const {projectId} = req.params;
+        const {projectId} = req.validatedData.params;
         const result = await ProjectService.deleteProject(projectId, req.user.id);
 
         res.status(201).json(result);
@@ -50,8 +50,8 @@ const deleteProject = async (req, res) => {
 
 const updateProject = async (req, res) => {
     try {
-        const {projectId} = req.params;
-        const {name, description} = req.body;
+        const {projectId} = req.validatedData.params;
+        const {name, description} = req.validatedData.body;
         const result = await ProjectService.updateProject(name, description, projectId, req.user.id);
 
         res.status(201).json(result);

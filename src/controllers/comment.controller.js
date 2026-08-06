@@ -2,9 +2,9 @@ import CommentService from "../services/comment.service.js";
 
 const newComment = async (req, res) => {
     try {
-        const {taskId} = req.params;
+        const {taskId} = req.validatedData.params;
         const userId = req.user.id;
-        const {content} = req.body;
+        const {content} = req.validatedData.body;
 
         const result = await CommentService.newComment(taskId, userId, content);
         res.status(201).json(result);
@@ -16,7 +16,7 @@ const newComment = async (req, res) => {
 
 const getAllComments = async (req, res) => {
     try {
-        const {taskId} = req.params;
+        const {taskId} = req.validatedData.params;
 
         const result = await CommentService.getAllComments(taskId);
         res.status(201).json(result);
@@ -28,7 +28,7 @@ const getAllComments = async (req, res) => {
 
 const getComment = async (req, res) => {
     try {
-        const {commentId} = req.params;
+        const {commentId} = req.validatedData.params;
 
         const result = await CommentService.getComment(commentId);
         res.status(201).json(result);
@@ -40,7 +40,7 @@ const getComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
     try {
-        const {commentId} = req.params;
+        const {commentId} = req.validatedData.params;
 
         const result = await CommentService.deleteComment(commentId);
         res.status(201).json(result);
@@ -52,8 +52,8 @@ const deleteComment = async (req, res) => {
 
 const updateContent = async (req, res) => {
     try {
-        const {commentId} = req.params;
-        const {content} = req.body;
+        const {commentId} = req.validatedData.params;
+        const {content} = req.validatedData.body;
 
         const result = await CommentService.updateContent(commentId, content);
         res.status(201).json(result);

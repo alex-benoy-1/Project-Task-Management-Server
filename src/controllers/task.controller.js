@@ -2,7 +2,7 @@ import TaskService from "../services/task.service.js";
 
 const getAllTasks = async (req, res) => {
     try {
-        const {projectId} = req.params;
+        const {projectId} = req.validatedData.params;
         const result = await TaskService.getTasksByProjectId(projectId);
 
         res.status(201).json(result);
@@ -13,8 +13,8 @@ const getAllTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
     try {
-        const {taskId} = req.params;
-        const updates = req.body;
+        const {taskId} = req.validatedData.params;
+        const updates = req.validatedData.body;
 
         const result = await TaskService.updateTask(taskId, updates);
 
@@ -25,7 +25,7 @@ const updateTask = async (req, res) => {
 
 const getTask = async (req, res) => {
     try {
-        const {taskId} = req.params;
+        const {taskId} = req.validatedData.params;
         const result = await TaskService.getTaskByTaskId(taskId);
 
         res.status(201).json(result);
@@ -35,8 +35,8 @@ const getTask = async (req, res) => {
 
 const newTask = async (req, res) => {
     try {
-        const {projectId} = req.params;
-        const {title, description, status, priority, createdBy, dueDate} = req.body;
+        const {projectId} = req.validatedData.params;
+        const {title, description, status, priority, createdBy, dueDate} = req.validatedData.body;
         const result = await TaskService.newTask(projectId, title, description, status, priority, createdBy, dueDate);
 
         res.status(201).json(result);
@@ -46,7 +46,7 @@ const newTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
     try {
-        const {taskId} = req.params;
+        const {taskId} = req.validatedData.params;
         const result = await TaskService.deleteTask(taskId);
 
         res.status(201).json(result);
@@ -56,8 +56,8 @@ const deleteTask = async (req, res) => {
 
 const updateStatus = async (req, res) => {
     try {
-        const {taskId} = req.params;
-        const {status} = req.body;
+        const {taskId} = req.validatedData.params;
+        const {status} = req.validatedData.body;
         const result = await TaskService.updateStatus(taskId, status);
 
         res.status(201).json(result);

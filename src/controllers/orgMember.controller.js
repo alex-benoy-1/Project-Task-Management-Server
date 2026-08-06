@@ -14,7 +14,7 @@ const removeMember = async (req, res) => {
 
 const getMembers = async (req, res) => {
     try {
-        const {orgId} = req.params;
+        const {orgId} = req.validatedData.params;
         
         const result = await OrgMemberService.getMembers(orgId);
 
@@ -40,7 +40,7 @@ const addMember =async (req, res) => {
 const changeRole = async (req, res) => {
     try {
         const {memberId,orgId} = req.validatedData.params;
-        const {role} = req.body;
+        const {role} = req.validatedData.body;
 
         const result = await OrgMemberService.changeRole(orgId, memberId, role);
 

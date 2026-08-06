@@ -33,7 +33,7 @@ const updateContent = async (commentId, content) => {
         SET content = $1
         WHERE id = $2
         RETURNING *`;
-    const result = await pgdb.query(query, [commentId, content]);
+    const result = await pgdb.query(query, [content, commentId]);
 
     return result.rows[0];
 }

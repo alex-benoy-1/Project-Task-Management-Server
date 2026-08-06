@@ -2,7 +2,7 @@ import ProjectMemberService from "../services/projectMember.service.js";
 
 const getMembers = async (req, res) => {
     try {
-        const {projectId} = req.params;
+        const {projectId} = req.validatedData.params;
         const result = await ProjectMemberService.getMembers(projectId);
 
         res.status(201).json(result);
@@ -13,8 +13,8 @@ const getMembers = async (req, res) => {
 
 const addMember = async (req, res) => {
     try {
-        const {projectId} = req.params;
-        const {memberId, role} = req.body;
+        const {projectId} = req.validatedData.params;
+        const {memberId, role} = req.validatedData.body;
 
         const result = await ProjectMemberService.addMember(projectId, memberId, role);
         res.status(201).json(result);
@@ -25,7 +25,7 @@ const addMember = async (req, res) => {
 
 const removeMember = async (req, res) => {
     try {
-        const {projectId, memberId} = req.params;
+        const {projectId, memberId} = req.validatedData.params;
 
         const result = await ProjectMemberService.removeMember(projectId, memberId);
         res.status(201).json(result);
@@ -36,7 +36,7 @@ const removeMember = async (req, res) => {
 
 const getMember = async (req, res) => {
     try {
-        const {projectId, memberId} = req.params;
+        const {projectId, memberId} = req.validatedData.params;
         const result = await ProjectMemberService.getMember(projectId, memberId);
 
         res.status(201).json(result);
@@ -47,8 +47,8 @@ const getMember = async (req, res) => {
 
 const changeRole = async (req, res) => {
     try {
-        const {projectId, memberId} = req.params;
-        const {role} = req.body;
+        const {projectId, memberId} = req.validatedData.params;
+        const {role} = req.validatedData.body;
 
         const result = await ProjectMemberService.changeRole(projectId, memberId, role);
 
