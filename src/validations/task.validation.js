@@ -32,19 +32,18 @@ const updateTaskSchema = z.object ({
         title: z
             .string()
             .min(2)
-            .max(100),
+            .max(100).optional(),
         description: z
             .string()
             .min(2)
-            .max(200),
-        status: z.enum(["todo", "in_progress", "review", "done"]),
-        priority: z.enum(["low", "medium", "high", "critical"]),
-        createdBy: z.uuid(),
+            .max(200).optional(),
+        status: z.enum(["todo", "in_progress", "review", "done"]).optional(),
+        priority: z.enum(["low", "medium", "high", "critical"]).optional(),
+        createdBy: z.uuid().optional(),
         dueDate: z
-            .coerce.date()
-    }),
+            .coerce.date().optional()
+    }).strict(),
     params: z.object ({
-        projectId: z.uuid(),
         taskId: z.uuid()
     }).strict()
 })

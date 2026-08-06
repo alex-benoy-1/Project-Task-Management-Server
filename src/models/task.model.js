@@ -14,7 +14,7 @@ const newTask = async (projectId, title, description, status, priority, created_
         INSERT INTO tasks (project_id, title, description, status, priority, created_by, due_date)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING *`;
-    const result = pgdb.query(query, [projectId, title, description, status, priority, created_by, due_date]);
+    const result = await pgdb.query(query, [projectId, title, description, status, priority, created_by, due_date]);
 
     return result.rows[0];
 }
@@ -69,7 +69,7 @@ const updateStatus = async (taskId, status) => {
         SET status = $1
         WHERE id = $2
         RETURNING *`;
-    const result = await pgdb.query(query, [taskId, status]);
+    const result = await pgdb.query(query, [status, taskId]);
 
     return result.rows[0];
 }

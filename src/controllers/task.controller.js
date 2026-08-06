@@ -13,7 +13,7 @@ const getAllTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
     try {
-        const {projectId, taskId} = req.params;
+        const {taskId} = req.params;
         const updates = req.body;
 
         const result = await TaskService.updateTask(taskId, updates);
