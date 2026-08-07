@@ -46,7 +46,8 @@ const deleteInvitation = async (req, res) => {
 const acceptInvitation = async (req, res) => {
     try {
         const {token} = req.params;
-        const result = await InvitationService.acceptInvitation(token);
+        const userId = req.user.id;
+        const result = await InvitationService.acceptInvitation(token,userId);
         res.status(201).json(result);
     } catch (err) {
         res.status(400).json({message: err.message});

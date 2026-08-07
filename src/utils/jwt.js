@@ -8,7 +8,7 @@ const generateToken = (user) => {
         {
             id: user.id,
             email: user.email,
-            fNameame: user.first_name,
+            fName: user.first_name,
             lNAme: user.last_name
         },
         process.env.JWT_SECRET,
