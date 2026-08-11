@@ -7,6 +7,10 @@ export default {
         "**/*.test.js"
     ],
 
+    setupFiles: [
+        "<rootDir>/jest.setup.js"
+    ],
+
     clearMocks: true,
 
     collectCoverageFrom: [
