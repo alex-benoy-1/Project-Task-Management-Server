@@ -1,0 +1,31 @@
+services:
+
+  api:
+    build: .
+    container_name: task-management-api
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env.docker
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:17-alpine
+    container_name: task-management-db
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB:  task_management
+
+    ports:
+      - "5432:5432"
+    
+    volumes:
+      - postgres_data:/var/lib/postgresql/postgres_data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  postgres_data:      
