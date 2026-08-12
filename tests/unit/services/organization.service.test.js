@@ -165,4 +165,93 @@ describe("Organization service", () => {
                 .toHaveBeenCalledWith("user-123")
         })
     })
+
+    describe("getOrgByOrgId", () => {
+        test("Should return organization matchinh organization ID", async () => {
+
+            OrganizationModel.getOrgByOrgId.mockResolvedValue(mockOrganization)
+
+            const result = await OrganizationService.getOrgByOrgId("org-123")
+
+            expect(result).toEqual(mockOrganization)
+
+            expect(OrganizationModel.getOrgByOrgId)
+                .toHaveBeenCalledWith("org-123")
+        })
+
+        test("Should throw error when no organization is found", async () => {
+
+            OrganizationModel.getOrgByOrgId.mockResolvedValue(null)
+
+            await expect (
+                OrganizationService.getOrgByOrgId("org-123")
+            ).rejects.toThrow("No organization found")
+            
+
+            expect(OrganizationModel.getOrgByOrgId)
+                .toHaveBeenCalledWith("org-123")
+        })
+    })
+
+    describe("deleteOrganization", () => {
+        test("Should delete organization successfully", async () => {
+            
+            OrganizationModel.deleleOrganization.mockResolvedValue(mockOrganization)
+
+            const result = await OrganizationService.deleteOrganization("org-123")
+
+            expect(result).toEqual(mockOrganization)
+
+            expect(OrganizationModel.deleleOrganization)
+                .toHaveBeenCalledWith("org-123")
+        })
+
+        test("Should throw error when deleteion unsuccesfull", async () => {
+            
+            OrganizationModel.deleleOrganization.mockResolvedValue(null)
+
+            await expect (
+                OrganizationService.deleteOrganization("org-123")
+            ).rejects.toThrow("No organization found")
+
+            expect(OrganizationModel.deleleOrganization)
+                .toHaveBeenCalledWith("org-123")
+        })
+    })
+
+    describe("updateOwner", () => {
+        test("Should update organization successfully", async () => {
+
+            const mockOrg = {
+                id: "org-123",
+                name: "New Company",
+                slug: "Company-uuid",
+                type: "team",
+                owner_id: "member-123",
+                created_at: new Date("2026-08-10T10:00:00Z"),
+                updated_at: new Date("2026-08-10T10:00:00Z")
+            }
+            
+            OrganizationModel.updateOwner.mockResolvedValue(mockOrg)
+
+            const result = await OrganizationService.updateOwner("org-123", "member-123")
+
+            expect(result).toEqual(mockOrg)
+
+            expect(OrganizationModel.updateOwner)
+                .toHaveBeenCalledWith("org-123", "member-123")
+        })
+
+        test("Should throw error when updation unsuccesfull", async () => {
+            
+            OrganizationModel.updateOwner.mockResolvedValue(null)
+
+            await expect (
+                OrganizationService.updateOwner("org-123", "member-123")
+            ).rejects.toThrow("Ownership not changed")
+
+            expect(OrganizationModel.updateOwner)
+                .toHaveBeenCalledWith("org-123", "member-123")
+        })
+    })
 })
