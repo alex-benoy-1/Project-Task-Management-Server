@@ -61,4 +61,10 @@ const getAllMembers = async (orgId) => {
     return result.rows;
 }
 
-export default {createOrgMember, membershipStatus, removeMemberById, getAllMembers, changeRole};
+export default {
+    createOrgMember, 
+    membershipStatus, 
+    removeMemberById, 
+    getAllMembers, 
+    changeRole
+};

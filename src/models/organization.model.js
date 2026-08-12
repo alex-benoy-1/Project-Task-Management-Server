@@ -51,8 +51,7 @@ const getOrganizationsByUser = async (userId) => {
             o.id,
             o.name,
             o.slug,
-            o.created_at,
-            o.updated_at,
+            om.joined_at,
             om.role 
         FROM organizations o
         JOIN organization_members om
