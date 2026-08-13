@@ -8,10 +8,12 @@ import taskRouter from "./routes/task.route.js";
 import commentRouter from "./routes/comment.route.js";
 import invitationRouter from "./routes/invitation.route.js";
 import healthRouter from "./routes/health.route.js";
+import loggerMiddleware from "./middleware/logger.middleware.js";
 
 const app = express();
 
 app.use(express.json());
+app.use(loggerMiddleware)
 
 app.get("/", (req, res) => {
     res.status(200).json({message: "App succesful"});

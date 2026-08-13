@@ -5,6 +5,7 @@ import pgdb from "../configs/db.config.js"
 import bcrypt from "bcrypt";
 import generateToken from "../utils/jwt.js";
 import crypto from "crypto";
+import logger from "../utils/logger.js";
 
 const register = async (fName, lName, email, password) => {
     const userExists = await UserModel.findUserByEmail(email);
@@ -60,13 +61,27 @@ const register = async (fName, lName, email, password) => {
 }
 
 const login = async (email, password) => {
+    
+    logger.info(
+        { email },
+        "Login attempt"
+    )
+
     const user = await UserModel.findUserByEmail(email);
     if(!user) {
+        logger.warn(
+            { email },
+            "Login failed, user not found"
+        )
         throw new Error("Invalid credentials");
     }
 
     const passwordMatch = await bcrypt.compare(password, user.password_hash);
     if(!passwordMatch) {
+        logger.warn(
+            { email },
+            "Login failed, Incorrect password"
+        )
         throw new Error("Invalid credentials");
     }
 
