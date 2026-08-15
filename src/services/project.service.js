@@ -2,6 +2,7 @@ import ProjectModel from "../models/project.model.js";
 import ProjectMemberModel from "../models/projectMember.model.js";
 import pgdb from "../configs/db.config.js";
 import logActivity from "../models/activity.model.js";
+import logger from "../utils/logger.js";
 
 const createProject = async (orgId, name, description, userId) => {
     
@@ -63,6 +64,11 @@ const getAllProjects = async (orgId, userId) => {
     }
 
     if(projects.length === 0) {
+        logger.info({ 
+                orgId,
+                memberId: userId
+            }, "All projects retrieved"
+        );
         return {
             projects: [],
             count: 0
