@@ -39,6 +39,14 @@ const createProject = async (orgId, name, description, userId) => {
 
         await client.query("COMMIT");
 
+        logger.info({ 
+                userId,
+                organization: orgId,
+                project: project.id,
+                projectName: project.name
+            }, "New project added"
+        );
+
         return {
             project: {
                 id: project.id,
@@ -50,6 +58,12 @@ const createProject = async (orgId, name, description, userId) => {
         }
     } catch (err) {
         await client.query("ROLLBACK");
+        logger.warn({ 
+                userId,
+                organization: orgId,
+                projectName: name
+            }, "Failed to add new project"
+        );
         throw err;
     } finally {
         client.release();
@@ -59,7 +73,12 @@ const createProject = async (orgId, name, description, userId) => {
 const getAllProjects = async (orgId, userId) => {
     const projects = await ProjectModel.getProjectsByOrgIdByUserId(orgId, userId);
 
-    if(!projects) {
+    if(!projects) 
+        {logger.warn({ 
+                orgId,
+                memberId: userId
+            }, "Project retrieval failed"
+        );
         throw new Error("No projects found");
     }
 
@@ -74,6 +93,11 @@ const getAllProjects = async (orgId, userId) => {
             count: 0
         };
     } else {
+        logger.info({ 
+                orgId,
+                memberId: userId
+            }, "All projects retrieved"
+        );
         return {
             projects,
             count: projects.length
@@ -85,9 +109,16 @@ const getProject = async (projectId) => {
     const project = await ProjectModel.getProject(projectId);
 
     if(!project) {
+        logger.warn({ 
+                project: projectId
+            }, "Failed retrieval of project details"
+        );
         throw new Error("No project found");
     }
-
+    logger.info({ 
+            project: project.id,
+        }, "Project details retrieved"
+    );
     return project;
 }
 
@@ -95,6 +126,11 @@ const deleteProject = async (projectId, userId) => {
     const project = await ProjectModel.deleteProject(projectId);
     
     if(!project) {
+        logger.info({ 
+                userId,
+                project: projectId,
+            }, "Failed to delete project"
+        );
         throw new Error("No project found");
     }
     await logActivity({
@@ -105,13 +141,25 @@ const deleteProject = async (projectId, userId) => {
         action: "Project deleted",
         metaData: {}
     })
-
+    logger.info({ 
+            userId,
+            organization: project.organization_id,
+            project: project.id,
+            projectName: project.name
+        }, "Project deleted"
+    );
     return project;
 }
 
 const updateProject = async (name, description, projectId, userId) => {
     const project = await ProjectModel.updateProject(name, description, projectId);
     if(!project) {
+        logger.info({ 
+                userId,
+                project: project.id,
+                projectName: project.name
+            }, "Failed to update project details"
+        );
         throw new Error("Project not updated");
     }
     await logActivity({
@@ -125,6 +173,13 @@ const updateProject = async (name, description, projectId, userId) => {
             newDescription: description
         }
     })
+
+    logger.info({ 
+            userId,
+            project: project.id,
+            projectName: project.name
+        }, "Project details updated"
+    );
     return project;
 }
 
