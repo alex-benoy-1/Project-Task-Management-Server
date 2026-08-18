@@ -1,4 +1,5 @@
 import ProjectMemberModel from "../models/projectMember.model.js";
+import logger from "../utils/logger.js";
 
 const getMembers = async (projectId) => {
     const members = await ProjectMemberModel.getMembers(projectId);

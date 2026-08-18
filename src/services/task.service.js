@@ -1,5 +1,6 @@
 import taskController from "../controllers/task.controller.js";
 import TaskModel from "../models/task.model.js";
+import logger from "../utils/logger.js";
 
 const getTasksByProjectId = async (projectId) => {
     const tasks = await TaskModel.getTasksByProjectId(projectId);
