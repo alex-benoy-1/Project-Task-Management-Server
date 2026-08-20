@@ -37,6 +37,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v4
+        with: 
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -66,8 +68,15 @@ jobs:
             -d task_management \
             -f database/init.sql
 
-      - name: Run tests
-        run: npm test -- --runInBand
+      # - name: Run tests
+      #   run: npm test -- --runInBand
 
-      - name: Generate coverage
+      # - name: Generate coverage
+      #   run: npm test -- --coverage --runInBand
+      - name: Run tests with coverage
         run: npm test -- --coverage --runInBand
+
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

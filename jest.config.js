@@ -19,5 +19,10 @@ export default {
         "!src/configs/**"
     ],
 
-    coverageDirectory: "coverage"
+    coverageDirectory: "coverage",
+
+    coverageReporters: [
+        "text",
+        "lcov"
+    ]
 };
