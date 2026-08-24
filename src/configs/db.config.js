@@ -8,7 +8,11 @@ const pgdb = new Pool({
     password: process.env.DBPASSWORD,
     host: process.env.DBHOST,
     port: process.env.DBPORT,
-    database: process.env.DBNAME
+    database: process.env.DBNAME,
+
+    ssl: process.env.DB_SSL === "true"
+        ? { rejectUnauthorized: false }
+        : false
 })
 
 export default pgdb;
